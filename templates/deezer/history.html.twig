@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Deezer history{% endblock %}
+
+{% block page_contents %}
+    <h1>Deezer history</h1>
+    <ul>
+    {% for d in data %}
+        <li>{{ d.title|e }} - {{ d.artist.name}} - {{  d.album.title }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

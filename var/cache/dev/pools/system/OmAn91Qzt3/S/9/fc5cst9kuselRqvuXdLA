@@ -1,0 +1,3 @@
+<?php //App%255CController%255CLastfmController
+
+return [PHP_INT_MAX, []];

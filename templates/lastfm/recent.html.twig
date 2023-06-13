@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Lastfm recent{% endblock %}
+
+{% block page_contents %}
+    <h1>Lastfm recent</h1>
+    <ul>
+    {% for d in data %}
+        <li>{{ d.name|e }} - {{ d.artist.name}} - {{  d.album.name }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

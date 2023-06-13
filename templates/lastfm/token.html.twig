@@ -1,0 +1,10 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Gettoken{% endblock %}
+
+{% block page_contents %}
+    {%  if url %} 
+        <p><a href="{{ url  }}">Połącz</a></p>
+        <p><a href="{{ url2  }}">Połącz 2</a></p>
+     {% endif %}
+{% endblock %}

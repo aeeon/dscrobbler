@@ -1,0 +1,11 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Getsession{% endblock %}
+
+{% block page_contents %}
+    {% if getsession %}
+        <p><a href="{{ getsession  }}">Autoryzacja sesji</a></p>
+    {% else %}
+        <h1>Polaczono</h1>
+     {% endif %}
+{% endblock %}

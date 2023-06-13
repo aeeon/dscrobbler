@@ -1,0 +1,35 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+
+parameters:
+    baseurl: http://localhost/
+    deezer:
+        apikey: frw9H5NeqioSk43A1zy00AY9PpAJjnXo494YPtsMfhWaVf5CH0i
+        secret: b29929f075480ff3aabaceb34d9154ab
+        appid: 594344
+    lastfm:
+        username: aeeon3
+        subscriber: 0
+        apiKey: 60d016e2508779089b4bd053b9645715
+        apiSecret: 15d9771f3542a5301ad9b27af3a68994
+        sessionKey: u3SZSwKZSr8ODplfPQWjRrMlC8uqUVli
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
