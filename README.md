@@ -1,5 +1,5 @@
 # Deezer scrobbler for last.fm
-This project was created for the purpose of manual scrobbling albums through Deezer streaming service. The standard Deezer last.fm scrobbler has problems with artist name, especially this is the case with classical music, when many tracks have different performers. To solve this problem I writed this app that allows edit artist name for the whole album before scrobbling  it.
+This project was created for the purpose of manual scrobbling albums through Deezer streaming service. The standard Deezer last.fm scrobbler has problems with artist name, especially this is the case with classical music, when many tracks have different performers. As the result one album may be scrobbled under many performer names instead of just composer or conductor name. To solve this problem I writed this app that allows edit artist name for the whole album before scrobbling  it.
 
 How it works:
 - this app uses deezer and last.fm session keys in order to work. You need working deezer and last.fm account. Deezer session key is obtained automatically and it's stored in the browser, last.fm session key is obtained in semi-automatic way and is stored in the file. 
