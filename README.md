@@ -11,5 +11,6 @@ WARNING:
 - the app was tested on PHP 8.2
 
 
+https://github.com/aeeon/dscrobbler/assets/11815852/da62aa75-30ec-4de4-863f-2e112560f10d
 
-https://github.com/aeeon/dscrobbler/assets/11815852/686686ab-ecc3-453e-8fd2-14ee78cde0bb
+
