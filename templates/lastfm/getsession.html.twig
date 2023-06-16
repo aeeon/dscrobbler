@@ -4,8 +4,10 @@
 
 {% block page_contents %}
     {% if getsession %}
-        <p><a href="{{ getsession  }}">Autoryzacja sesji</a></p>
-    {% else %}
-        <h1>Polaczono</h1>
+        <p><a href="{{ getsession  }}">Save session</a></p>
+      {% endif %}    
+    {% if sessionkey %}
+        <p>Session key: {{  sessionkey }}</p>
+        <p>New configuration was saved to the file</p>
      {% endif %}
 {% endblock %}

@@ -1,3 +1,5 @@
 ul li {
       padding-left: 0.5em;
 }
+p, h1 {padding-top:0.5em;}
+main { position:relative;top:72px;}

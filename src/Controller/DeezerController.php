@@ -132,6 +132,9 @@ class DeezerController extends AbstractController {
         return floor(($val - 1) / 25) * 25;
     }
 
+    /* deezer album tracks have pages, every page has 25 tracks, this function return indexes for every page thas is necessary, 
+     * for example if album has 100 tracks it has 4 pages, in this case function will return 4 indexes: 25, 50, 75 and 100
+     */
     private function getIndexes(int $begin, int $end): array {
         $indexes = [];
         $first = $this->calculateIndex($begin);
@@ -152,16 +155,18 @@ class DeezerController extends AbstractController {
         $indexes = [];
         $tracks_arr = [];
 
+        // if $range contain actual numbers range
         if (!is_numeric($range)) {
             $arr = explode("-", $range);
             $indexes = $this->getIndexes($arr[0], $arr[1]);
             $begin = (int) ($arr[0]-$indexes[0]);
             $end = (int) ($arr[1]-$indexes[0]);
-        } else {
+        } else { // if range contain just single number
             $indexes[] = $this->calculateIndex((int)$range);
             $begin = (int) ($range-$indexes[0]);
         }
 
+        // we go trough all album pages and save them all in seperate  array
         foreach ($indexes as $index) {
             $tracks_arr[] = $this->api->getAlbumTracks($id, $index)->data;
         }

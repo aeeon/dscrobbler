@@ -70,7 +70,7 @@ class __TwigTemplate_ab21bece106be913cc5519614cdc341e extends Template
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "page_contents"));
 
         // line 6
-        echo "    <h1>Rozłączono</h1>
+        echo "    <h1>Disconnected</h1>
 ";
         
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
@@ -99,7 +99,7 @@ class __TwigTemplate_ab21bece106be913cc5519614cdc341e extends Template
 {% block title %}Logout{% endblock %}
 
 {% block page_contents %}
-    <h1>Rozłączono</h1>
+    <h1>Disconnected</h1>
 {% endblock %}
 ", "deezer/logout.html.twig", "/home/fb/Backup/Dokumenty/public_html/dscrobbler/templates/deezer/logout.html.twig");
     }

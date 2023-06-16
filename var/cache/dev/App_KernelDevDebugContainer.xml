@@ -42,10 +42,10 @@
     </parameter>
     <parameter key="lastfm" type="collection">
       <parameter key="username">aeeon3</parameter>
-      <parameter key="subscriber">0</parameter>
+      <parameter key="subscriber" type="string">0</parameter>
       <parameter key="apiKey">60d016e2508779089b4bd053b9645715</parameter>
       <parameter key="apiSecret">15d9771f3542a5301ad9b27af3a68994</parameter>
-      <parameter key="sessionKey">u3SZSwKZSr8ODplfPQWjRrMlC8uqUVli</parameter>
+      <parameter key="sessionKey">ZhkTcUN_V4GzVIqBF_4pbMBmvxlrBY7B</parameter>
     </parameter>
     <parameter key="event_dispatcher.event_aliases" type="collection">
       <parameter key="Symfony\Component\Console\Event\ConsoleCommandEvent">console.command</parameter>

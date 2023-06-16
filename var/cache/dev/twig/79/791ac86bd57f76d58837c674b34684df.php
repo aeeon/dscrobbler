@@ -59,7 +59,7 @@ class __TwigTemplate_a748e17c2ed2f621e17b18cc0a2c2b1f extends Template
         ";
         // line 16
         $this->displayBlock('body', $context, $blocks);
-        // line 52
+        // line 54
         echo "        <script src=\"https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.bundle.min.js\"></script>
     </body>
 </html>";
@@ -117,20 +117,21 @@ class __TwigTemplate_a748e17c2ed2f621e17b18cc0a2c2b1f extends Template
                 ";
         // line 19
         $this->displayBlock('sidebar', $context, $blocks);
-        // line 39
+        // line 40
         echo "                    </div>
             </div>
-
+<main class=\"content\">
    <div class=\"container\">
       <div class=\"page-header\" id=\"banner\">
         <div class=\"row\">
                 ";
-        // line 45
+        // line 46
         $this->displayBlock('content', $context, $blocks);
-        // line 48
+        // line 49
         echo "            </div>
       </div>
    </div>
+</main>
         ";
         
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
@@ -171,10 +172,14 @@ class __TwigTemplate_a748e17c2ed2f621e17b18cc0a2c2b1f extends Template
                           <div class=\"dropdown-menu\" aria-labelledby=\"lastfm\">
                             <a class=\"dropdown-item\" href=\"";
         // line 32
-        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("lastfm_connect");
-        echo "\">Scrobble/Connect</a>
-                            <a class=\"dropdown-item\" href=\"";
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("lastfm_scrobbleadd");
+        echo "\">Scrobble</a>
+                             <a class=\"dropdown-item\" href=\"";
         // line 33
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("lastfm_connect");
+        echo "\">Connect</a>
+                            <a class=\"dropdown-item\" href=\"";
+        // line 34
         echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("lastfm_recent");
         echo "\">Recent scrobbles</a>
                             </div>                      
@@ -187,14 +192,14 @@ class __TwigTemplate_a748e17c2ed2f621e17b18cc0a2c2b1f extends Template
 
     }
 
-    // line 45
+    // line 46
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "content"));
 
-        // line 46
+        // line 47
         echo "                
                 ";
         
@@ -209,7 +214,7 @@ class __TwigTemplate_a748e17c2ed2f621e17b18cc0a2c2b1f extends Template
 
     public function getDebugInfo()
     {
-        return array (  198 => 46,  191 => 45,  178 => 33,  174 => 32,  166 => 27,  162 => 26,  158 => 25,  152 => 22,  148 => 20,  141 => 19,  131 => 48,  129 => 45,  121 => 39,  119 => 19,  115 => 17,  108 => 16,  99 => 12,  92 => 7,  85 => 6,  72 => 5,  63 => 52,  61 => 16,  57 => 14,  55 => 6,  51 => 5,  45 => 1,);
+        return array (  203 => 47,  196 => 46,  183 => 34,  179 => 33,  175 => 32,  167 => 27,  163 => 26,  159 => 25,  153 => 22,  149 => 20,  142 => 19,  131 => 49,  129 => 46,  121 => 40,  119 => 19,  115 => 17,  108 => 16,  99 => 12,  92 => 7,  85 => 6,  72 => 5,  63 => 54,  61 => 16,  57 => 14,  55 => 6,  51 => 5,  45 => 1,);
     }
 
     public function getSourceContext()
@@ -245,7 +250,8 @@ class __TwigTemplate_a748e17c2ed2f621e17b18cc0a2c2b1f extends Template
                         </li>
                         <li class=\"nav-item dropdown\"><a class=\"nav-link dropdown-toggle\" data-bs-toggle=\"dropdown\" href=\"#\">LastFM</a>
                           <div class=\"dropdown-menu\" aria-labelledby=\"lastfm\">
-                            <a class=\"dropdown-item\" href=\"{{ url('lastfm_connect') }}\">Scrobble/Connect</a>
+                            <a class=\"dropdown-item\" href=\"{{ url('lastfm_scrobbleadd') }}\">Scrobble</a>
+                             <a class=\"dropdown-item\" href=\"{{ url('lastfm_connect') }}\">Connect</a>
                             <a class=\"dropdown-item\" href=\"{{ url('lastfm_recent') }}\">Recent scrobbles</a>
                             </div>                      
                         </li>
@@ -254,7 +260,7 @@ class __TwigTemplate_a748e17c2ed2f621e17b18cc0a2c2b1f extends Template
                 {% endblock %}
                     </div>
             </div>
-
+<main class=\"content\">
    <div class=\"container\">
       <div class=\"page-header\" id=\"banner\">
         <div class=\"row\">
@@ -264,6 +270,7 @@ class __TwigTemplate_a748e17c2ed2f621e17b18cc0a2c2b1f extends Template
             </div>
       </div>
    </div>
+</main>
         {% endblock %}
         <script src=\"https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.bundle.min.js\"></script>
     </body>

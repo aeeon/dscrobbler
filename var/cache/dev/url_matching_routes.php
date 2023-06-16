@@ -14,6 +14,7 @@ return [
         '/deezer/history' => [[['_route' => 'deezer_history', '_controller' => 'App\\Controller\\DeezerController::getUserHistory'], null, null, null, false, false, null]],
         '/' => [[['_route' => 'home', '_controller' => 'App\\Controller\\HomeController::index'], null, null, null, false, false, null]],
         '/lastfm/connect' => [[['_route' => 'lastfm_connect', '_controller' => 'App\\Controller\\LastfmController::connect'], null, null, null, false, false, null]],
+        '/lastfm/scrobleadd' => [[['_route' => 'lastfm_scrobbleadd', '_controller' => 'App\\Controller\\LastfmController::scrobleadd'], null, null, null, false, false, null]],
         '/lastfm/scrobble' => [[['_route' => 'lastfm_scrobble', '_controller' => 'App\\Controller\\LastfmController::scrobble'], null, null, null, false, false, null]],
         '/lastfm/recent' => [[['_route' => 'lastfm_recent', '_controller' => 'App\\Controller\\LastfmController::recent'], null, null, null, false, false, null]],
     ],

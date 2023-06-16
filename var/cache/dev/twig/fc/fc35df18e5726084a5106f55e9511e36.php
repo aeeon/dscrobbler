@@ -57,10 +57,9 @@ class __TwigTemplate_c8d951c22ae87b408b13bc976cc29997 extends Template
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "content"));
 
         // line 4
-        echo "    <h1>Deezer scrobbler</h1>
-
+        echo "
     ";
-        // line 6
+        // line 5
         $this->displayBlock('page_contents', $context, $blocks);
         
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
@@ -90,7 +89,7 @@ class __TwigTemplate_c8d951c22ae87b408b13bc976cc29997 extends Template
 
     public function getDebugInfo()
     {
-        return array (  64 => 6,  60 => 4,  53 => 3,  36 => 1,);
+        return array (  63 => 5,  60 => 4,  53 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -98,7 +97,6 @@ class __TwigTemplate_c8d951c22ae87b408b13bc976cc29997 extends Template
         return new Source("{% extends 'base.html.twig' %}
 
 {% block content %}
-    <h1>Deezer scrobbler</h1>
 
     {% block page_contents %}{% endblock %}
 {% endblock %}", "layout.html.twig", "/home/fb/Backup/Dokumenty/public_html/dscrobbler/templates/layout.html.twig");

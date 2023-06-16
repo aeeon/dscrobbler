@@ -73,14 +73,14 @@ class __TwigTemplate_6851fdcb16efcb130f79f47be12c804e extends Template
         echo "    ";
         if ((isset($context["url"]) || array_key_exists("url", $context) ? $context["url"] : (function () { throw new RuntimeError('Variable "url" does not exist.', 6, $this->source); })())) {
             echo " 
-        <p><a href=\"";
+        <p><a target=\"_blank\" href=\"";
             // line 7
             echo twig_escape_filter($this->env, (isset($context["url"]) || array_key_exists("url", $context) ? $context["url"] : (function () { throw new RuntimeError('Variable "url" does not exist.', 7, $this->source); })()), "html", null, true);
-            echo "\">Połącz</a></p>
+            echo "\">Link 1</a></p>
         <p><a href=\"";
             // line 8
             echo twig_escape_filter($this->env, (isset($context["url2"]) || array_key_exists("url2", $context) ? $context["url2"] : (function () { throw new RuntimeError('Variable "url2" does not exist.', 8, $this->source); })()), "html", null, true);
-            echo "\">Połącz 2</a></p>
+            echo "\">Link 2</a></p>
      ";
         }
         
@@ -111,8 +111,8 @@ class __TwigTemplate_6851fdcb16efcb130f79f47be12c804e extends Template
 
 {% block page_contents %}
     {%  if url %} 
-        <p><a href=\"{{ url  }}\">Połącz</a></p>
-        <p><a href=\"{{ url2  }}\">Połącz 2</a></p>
+        <p><a target=\"_blank\" href=\"{{ url  }}\">Link 1</a></p>
+        <p><a href=\"{{ url2  }}\">Link 2</a></p>
      {% endif %}
 {% endblock %}
 ", "lastfm/token.html.twig", "/home/fb/Backup/Dokumenty/public_html/dscrobbler/templates/lastfm/token.html.twig");

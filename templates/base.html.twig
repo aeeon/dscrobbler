@@ -29,7 +29,8 @@
                         </li>
                         <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">LastFM</a>
                           <div class="dropdown-menu" aria-labelledby="lastfm">
-                            <a class="dropdown-item" href="{{ url('lastfm_connect') }}">Scrobble/Connect</a>
+                            <a class="dropdown-item" href="{{ url('lastfm_scrobbleadd') }}">Scrobble</a>
+                             <a class="dropdown-item" href="{{ url('lastfm_connect') }}">Connect</a>
                             <a class="dropdown-item" href="{{ url('lastfm_recent') }}">Recent scrobbles</a>
                             </div>                      
                         </li>
@@ -38,7 +39,7 @@
                 {% endblock %}
                     </div>
             </div>
-
+<main class="content">
    <div class="container">
       <div class="page-header" id="banner">
         <div class="row">
@@ -48,6 +49,7 @@
             </div>
       </div>
    </div>
+</main>
         {% endblock %}
         <script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     </body>

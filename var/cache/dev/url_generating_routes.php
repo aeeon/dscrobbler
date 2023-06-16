@@ -10,6 +10,7 @@ return [
     'deezer_history' => [[], ['_controller' => 'App\\Controller\\DeezerController::getUserHistory'], [], [['text', '/deezer/history']], [], [], []],
     'home' => [[], ['_controller' => 'App\\Controller\\HomeController::index'], [], [['text', '/']], [], [], []],
     'lastfm_connect' => [[], ['_controller' => 'App\\Controller\\LastfmController::connect'], [], [['text', '/lastfm/connect']], [], [], []],
+    'lastfm_scrobbleadd' => [[], ['_controller' => 'App\\Controller\\LastfmController::scrobleadd'], [], [['text', '/lastfm/scrobleadd']], [], [], []],
     'lastfm_scrobble' => [[], ['_controller' => 'App\\Controller\\LastfmController::scrobble'], [], [['text', '/lastfm/scrobble']], [], [], []],
     'lastfm_recent' => [[], ['_controller' => 'App\\Controller\\LastfmController::recent'], [], [['text', '/lastfm/recent']], [], [], []],
 ];
