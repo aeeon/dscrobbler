@@ -49,8 +49,9 @@ class LastfmController extends AbstractController {
     private function getToken($session, array $params): Response {
         $session->set('state', md5(uniqid(rand(), TRUE))); //CSRF protection
         $obj = new AuthApi('gettoken', $params);
-        $dialog_url = self::AUTH_URL . '?api_key=' . $params['apiKey'] . '&token=' . $obj->token . "&cb=" . urlencode($this->callback);
-        $url = $this->callback . '?token=' . $obj->token;
+         $url = $this->callback . '?token=' . $obj->token;
+        $dialog_url = self::AUTH_URL . '?api_key=' . $params['apiKey'] . '&token=' . $obj->token . "&cb=" . urlencode($url);
+       
         return $this->render('lastfm/token.html.twig', ['url' => $dialog_url, 'url2' => $url]);
     }
 

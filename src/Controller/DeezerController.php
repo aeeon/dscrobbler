@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\CurlHttpClient;
 use PouleR\DeezerAPI\DeezerAPIClient;
 use PouleR\DeezerAPI\DeezerAPI;
-use LastFmApi\Api\TrackApi;
+//use LastFmApi\Api\TrackApi;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class DeezerController extends AbstractController {
@@ -146,7 +146,7 @@ class DeezerController extends AbstractController {
         return $indexes;
     }
 
-    public function scrobbleTracks(TrackApi $trackApi, int $id, array $params, string $range): array {
+    public function scrobbleTracks( $trackApi, int $id, array $params, string $range): array {
         $session = $this->requestStack->getSession();
         $this->connect($session);
         $arr = [];
@@ -174,7 +174,7 @@ class DeezerController extends AbstractController {
         return $scrobbled;
     }
 
-    private function scrobbleIndexTracks(TrackApi $trackApi, $tracks_arr, $params, $begin, $end) {
+    private function scrobbleIndexTracks( $trackApi, $tracks_arr, $params, $begin, $end) {
         $scrobbled = [];
        // $skipped=[];
         $i = 1;

@@ -23,6 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\AutowiringFailedException;
+use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
 use Symfony\Component\DependencyInjection\Exception\RuntimeException;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\TypedReference;
@@ -57,11 +58,22 @@ class AutowirePass extends AbstractRecursivePass
         $this->defaultArgument = new class() {
             public $value;
             public $names;
+            public $bag;
+
+            public function withValue(\ReflectionParameter $parameter): self
+            {
+                $clone = clone $this;
+                $clone->value = $this->bag->escapeValue($parameter->getDefaultValue());
+
+                return $clone;
+            }
         };
     }
 
     public function process(ContainerBuilder $container)
     {
+        $this->defaultArgument->bag = $container->getParameterBag();
+
         try {
             $this->typesClone = clone $this;
             parent::process($container);
@@ -69,6 +81,7 @@ class AutowirePass extends AbstractRecursivePass
             $this->decoratedClass = null;
             $this->decoratedId = null;
             $this->methodCalls = null;
+            $this->defaultArgument->bag = null;
             $this->defaultArgument->names = null;
             $this->getPreviousValue = null;
             $this->decoratedMethodIndex = null;
@@ -279,9 +292,16 @@ class AutowirePass extends AbstractRecursivePass
             if ($checkAttributes) {
                 foreach ($parameter->getAttributes() as $attribute) {
                     if (\in_array($attribute->getName(), [TaggedIterator::class, TaggedLocator::class, Autowire::class, MapDecorated::class], true)) {
-                        $arguments[$index] = $this->processAttribute($attribute->newInstance(), $parameter->allowsNull());
-
-                        continue 2;
+                        try {
+                            $arguments[$index] = $this->processAttribute($attribute->newInstance(), $parameter->allowsNull());
+                            continue 2;
+                        } catch (ParameterNotFoundException $e) {
+                            if (!$parameter->isDefaultValueAvailable()) {
+                                throw new AutowiringFailedException($this->currentId, $e->getMessage(), 0, $e);
+                            }
+                            $arguments[$index] = clone $this->defaultArgument;
+                            $arguments[$index]->value = $parameter->getDefaultValue();
+                        }
                     }
                 }
             }
@@ -307,8 +327,7 @@ class AutowirePass extends AbstractRecursivePass
                 }
 
                 // specifically pass the default value
-                $arguments[$index] = clone $this->defaultArgument;
-                $arguments[$index]->value = $parameter->getDefaultValue();
+                $arguments[$index] = $this->defaultArgument->withValue($parameter);
 
                 continue;
             }
@@ -318,8 +337,7 @@ class AutowirePass extends AbstractRecursivePass
                     $failureMessage = $this->createTypeNotFoundMessageCallback($ref, sprintf('argument "$%s" of method "%s()"', $parameter->name, $class !== $this->currentId ? $class.'::'.$method : $method));
 
                     if ($parameter->isDefaultValueAvailable()) {
-                        $value = clone $this->defaultArgument;
-                        $value->value = $parameter->getDefaultValue();
+                        $value = $this->defaultArgument->withValue($parameter);
                     } elseif (!$parameter->allowsNull()) {
                         throw new AutowiringFailedException($this->currentId, $failureMessage);
                     }

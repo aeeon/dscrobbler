@@ -17,6 +17,9 @@ return [
         '/lastfm/scrobleadd' => [[['_route' => 'lastfm_scrobbleadd', '_controller' => 'App\\Controller\\LastfmController::scrobleadd'], null, null, null, false, false, null]],
         '/lastfm/scrobble' => [[['_route' => 'lastfm_scrobble', '_controller' => 'App\\Controller\\LastfmController::scrobble'], null, null, null, false, false, null]],
         '/lastfm/recent' => [[['_route' => 'lastfm_recent', '_controller' => 'App\\Controller\\LastfmController::recent'], null, null, null, false, false, null]],
+        '/listenbrainz/test' => [[['_route' => 'listenbrainz_test', '_controller' => 'App\\Controller\\ListenbrainzController::listenbrainz_recent'], null, null, null, false, false, null]],
+        '/listenbrainz/scrobble' => [[['_route' => 'listenbrainz_scrobble', '_controller' => 'App\\Controller\\ListenbrainzController::scrobble'], null, null, null, false, false, null]],
+        '/listenbrainz/scrobleadd' => [[['_route' => 'listenbrainz_scrobbleadd', '_controller' => 'App\\Controller\\ListenbrainzController::scrobleadd'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

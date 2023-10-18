@@ -1,7 +1,8 @@
 parameters:
     baseurl: 'http://localhost/'
     deezer: { apikey: frw9H5NeqioSk43A1zy00AY9PpAJjnXo494YPtsMfhWaVf5CH0i, secret: b29929f075480ff3aabaceb34d9154ab, appid: 594344 }
-    lastfm: { username: aeeon3, subscriber: '0', apiKey: 60d016e2508779089b4bd053b9645715, apiSecret: 15d9771f3542a5301ad9b27af3a68994, sessionKey: ZhkTcUN_V4GzVIqBF_4pbMBmvxlrBY7B }
+    lastfm: { username: aeeon3, subscriber: '0', apiKey: 60d016e2508779089b4bd053b9645715, apiSecret: 15d9771f3542a5301ad9b27af3a68994, sessionKey: AVmr3sic-jdttk3OS5awwvoxs0n1_Ic8 }
+    listenbrainz: {token: bf4d8e70-3c86-40d3-a342-00b5df6d1fca, username: aeeon}
 services:
     _defaults: { autowire: true, autoconfigure: true }
     App\: { resource: ../src/, exclude: [../src/DependencyInjection/, ../src/Entity/, ../src/Kernel.php] }

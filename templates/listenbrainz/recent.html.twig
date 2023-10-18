@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Listenbrainz recent{% endblock %}
+
+{% block page_contents %}
+    <h1>Listenbrainz recent</h1>
+
+        <ul>
+    {% for d in data %}
+        <li>{{  d.track_metadata.track_name }} - {{ d.track_metadata.artist_name|e }} - {{ d.track_metadata.release_name}}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

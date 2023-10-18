@@ -45,7 +45,11 @@
       <parameter key="subscriber" type="string">0</parameter>
       <parameter key="apiKey">60d016e2508779089b4bd053b9645715</parameter>
       <parameter key="apiSecret">15d9771f3542a5301ad9b27af3a68994</parameter>
-      <parameter key="sessionKey">ZhkTcUN_V4GzVIqBF_4pbMBmvxlrBY7B</parameter>
+      <parameter key="sessionKey">AVmr3sic-jdttk3OS5awwvoxs0n1_Ic8</parameter>
+    </parameter>
+    <parameter key="listenbrainz" type="collection">
+      <parameter key="token">bf4d8e70-3c86-40d3-a342-00b5df6d1fca</parameter>
+      <parameter key="username">aeeon</parameter>
     </parameter>
     <parameter key="event_dispatcher.event_aliases" type="collection">
       <parameter key="Symfony\Component\Console\Event\ConsoleCommandEvent">console.command</parameter>
@@ -144,8 +148,22 @@
         <argument type="service" id=".service_locator.CshazM0.App\Controller\LastfmController"/>
       </call>
     </service>
+    <service id="App\Controller\ListenbrainzController" class="App\Controller\ListenbrainzController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <argument type="service" id="http_client"/>
+      <argument type="service" id="parameter_bag"/>
+      <argument type="service" id="App\Controller\DeezerController"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.CshazM0.App\Controller\ListenbrainzController"/>
+      </call>
+    </service>
     <service id="App\Form\Type\AlbumType" class="App\Form\Type\AlbumType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
+    </service>
+    <service id="App\Lib\ListenbrainzApi" class="App\Lib\ListenbrainzApi" autowire="true" autoconfigure="true">
+      <argument type="service" id="http_client"/>
+      <argument type="service" id="parameter_bag"/>
     </service>
     <service id="controller_resolver" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver">
       <tag name="monolog.logger" channel="request"/>
@@ -183,7 +201,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag name="controller.argument_value_resolver" priority="-50"/>
-      <argument type="service" id=".service_locator.9Bm__zY"/>
+      <argument type="service" id=".service_locator.HBdvAhp"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag name="controller.argument_value_resolver" priority="-100"/>
@@ -525,7 +543,7 @@
     </service>
     <service id="url_helper" class="Symfony\Component\HttpFoundation\UrlHelper">
       <argument type="service" id="request_stack"/>
-      <argument type="service" id="router.request_context" on-invalid="ignore"/>
+      <argument type="service" id="router.default" on-invalid="ignore"/>
     </service>
     <service id="cache_warmer" class="Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate" public="true">
       <tag name="container.no_preload"/>
@@ -1287,7 +1305,11 @@
       <tag name="monolog.logger" channel="http_client"/>
       <tag name="kernel.reset" method="reset" on_invalid="ignore"/>
       <tag name="http_client.client"/>
-      <argument type="collection"/>
+      <argument type="collection">
+        <argument key="max_redirects">7</argument>
+        <argument key="headers" type="collection"/>
+        <argument key="resolve" type="collection"/>
+      </argument>
       <argument>6</argument>
       <call method="setLogger">
         <argument type="service" id="logger" on-invalid="ignore"/>
@@ -2007,6 +2029,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\LastfmController" class="App\Controller\LastfmController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\LastfmController" class="App\Controller\LastfmController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\LastfmController" class="App\Controller\LastfmController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ListenbrainzController" class="App\Controller\ListenbrainzController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ListenbrainzController" class="App\Controller\ListenbrainzController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\ListenbrainzController" class="App\Controller\ListenbrainzController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\Type\AlbumType" class="App\Form\Type\AlbumType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\Type\AlbumType" class="App\Form\Type\AlbumType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.7nzbL4K" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -2039,21 +2064,13 @@
         <argument key="loader" type="service_closure" id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface"/>
       </argument>
     </service>
-    <service id=".service_locator.6HIe2Fp" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.HBdvAhp" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="trackApi" type="service_closure" id=".errored..service_locator.6HIe2Fp.LastFmApi\Api\TrackApi"/>
-      </argument>
-    </service>
-    <service id=".service_locator.9Bm__zY" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="App\Controller\DeezerController::scrobbleTracks" type="service_closure" id=".service_locator.6HIe2Fp"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
-        <argument key="App\Controller\DeezerController:scrobbleTracks" type="service_closure" id=".service_locator.6HIe2Fp"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
       </argument>
@@ -2106,6 +2123,12 @@
     <service id=".service_locator.CshazM0.App\Controller\LastfmController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\LastfmController"/>
       <argument>App\Controller\LastfmController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.CshazM0" method="withContext"/>
+    </service>
+    <service id=".service_locator.CshazM0.App\Controller\ListenbrainzController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\ListenbrainzController"/>
+      <argument>App\Controller\ListenbrainzController</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.CshazM0" method="withContext"/>
     </service>
@@ -2193,7 +2216,6 @@
       </argument>
     </service>
     <service id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
-    <service id=".errored..service_locator.6HIe2Fp.LastFmApi\Api\TrackApi" class="LastFmApi\Api\TrackApi"/>
     <service id=".console.command.about.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>about</argument>
       <argument type="collection"/>
@@ -2523,16 +2545,15 @@
     <service id="Twig\Environment" alias="twig"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.7nzbL4K" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.9Bm__zY"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.HBdvAhp"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id=".service_locator.o.uf2zi" alias=".service_locator.7nzbL4K"/>
-    <service id=".service_locator.dUwmFad" alias=".service_locator.9Bm__zY"/>
+    <service id=".service_locator.L.EDYUC" alias=".service_locator.HBdvAhp"/>
     <service id=".service_locator.b7eifrF" alias=".service_locator.VHeUsyi"/>
     <service id=".service_locator.VZoQk0z" alias=".service_locator.CshazM0"/>
     <service id="twig.error_renderer.html.inner" alias="error_handler.error_renderer.html"/>
     <service id=".service_locator.gFlme_s" alias=".service_locator.y4_Zrx."/>
-    <service id=".service_locator.IclVEwZ" alias=".service_locator.6HIe2Fp"/>
     <service id=".service_locator.BcoExym" alias=".service_locator.CshazM0"/>
     <service id=".service_locator.u6DWx23" alias=".service_locator.cXsfP3P"/>
   </services>

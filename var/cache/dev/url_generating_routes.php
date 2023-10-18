@@ -13,4 +13,7 @@ return [
     'lastfm_scrobbleadd' => [[], ['_controller' => 'App\\Controller\\LastfmController::scrobleadd'], [], [['text', '/lastfm/scrobleadd']], [], [], []],
     'lastfm_scrobble' => [[], ['_controller' => 'App\\Controller\\LastfmController::scrobble'], [], [['text', '/lastfm/scrobble']], [], [], []],
     'lastfm_recent' => [[], ['_controller' => 'App\\Controller\\LastfmController::recent'], [], [['text', '/lastfm/recent']], [], [], []],
+    'listenbrainz_test' => [[], ['_controller' => 'App\\Controller\\ListenbrainzController::listenbrainz_recent'], [], [['text', '/listenbrainz/test']], [], [], []],
+    'listenbrainz_scrobble' => [[], ['_controller' => 'App\\Controller\\ListenbrainzController::scrobble'], [], [['text', '/listenbrainz/scrobble']], [], [], []],
+    'listenbrainz_scrobbleadd' => [[], ['_controller' => 'App\\Controller\\ListenbrainzController::scrobleadd'], [], [['text', '/listenbrainz/scrobleadd']], [], [], []],
 ];
