@@ -38,18 +38,18 @@
     <parameter key="deezer" type="collection">
       <parameter key="apikey">frw9H5NeqioSk43A1zy00AY9PpAJjnXo494YPtsMfhWaVf5CH0i</parameter>
       <parameter key="secret">b29929f075480ff3aabaceb34d9154ab</parameter>
-      <parameter key="appid">594344</parameter>
+      <parameter key="appid" type="string">594344</parameter>
     </parameter>
     <parameter key="lastfm" type="collection">
       <parameter key="username">aeeon3</parameter>
       <parameter key="subscriber" type="string">0</parameter>
       <parameter key="apiKey">60d016e2508779089b4bd053b9645715</parameter>
       <parameter key="apiSecret">15d9771f3542a5301ad9b27af3a68994</parameter>
-      <parameter key="sessionKey">mlU25LTNdC3pA6p5VEyhrgksCWR5uUMZ</parameter>
+      <parameter key="sessionKey">qQZerrfV5Y8ubaVIjOP6m4rQvUTIwcI2</parameter>
     </parameter>
     <parameter key="listenbrainz" type="collection">
-      <parameter key="token">11614abe-3472-48c8-8e2a-88724b8f342a</parameter>
       <parameter key="username">aeeon</parameter>
+      <parameter key="token">ed0dcbf0-4a12-4f74-9ec0-80fe8c8c6db7</parameter>
     </parameter>
     <parameter key="event_dispatcher.event_aliases" type="collection">
       <parameter key="Symfony\Component\Console\Event\ConsoleCommandEvent">console.command</parameter>
@@ -156,6 +156,15 @@
       <argument type="service" id="App\Controller\DeezerController"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\ListenbrainzController"/>
+      </call>
+    </service>
+    <service id="App\Controller\SettingsController" class="App\Controller\SettingsController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <argument type="service" id="parameter_bag"/>
+      <argument type="service" id="request_stack"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\SettingsController"/>
       </call>
     </service>
     <service id="App\Form\Type\AlbumType" class="App\Form\Type\AlbumType" autowire="true" autoconfigure="true">
@@ -2064,6 +2073,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ListenbrainzController" class="App\Controller\ListenbrainzController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ListenbrainzController" class="App\Controller\ListenbrainzController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\ListenbrainzController" class="App\Controller\ListenbrainzController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\SettingsController" class="App\Controller\SettingsController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\SettingsController" class="App\Controller\SettingsController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\SettingsController" class="App\Controller\SettingsController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\Type\AlbumType" class="App\Form\Type\AlbumType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\Type\AlbumType" class="App\Form\Type\AlbumType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.7nzbL4K" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -2161,6 +2173,12 @@
     <service id=".service_locator.O2p6Lk7.App\Controller\ListenbrainzController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\ListenbrainzController"/>
       <argument>App\Controller\ListenbrainzController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
+    </service>
+    <service id=".service_locator.O2p6Lk7.App\Controller\SettingsController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\SettingsController"/>
+      <argument>App\Controller\SettingsController</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.O2p6Lk7" method="withContext"/>
     </service>

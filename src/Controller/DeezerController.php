@@ -12,6 +12,8 @@ use Symfony\Component\HttpClient\CurlHttpClient;
 use PouleR\DeezerAPI\DeezerAPIClient;
 use App\Lib\CustomDeezerApi as DeezerAPI;
 use Symfony\Component\HttpFoundation\RequestStack;
+use LastFmApi\Exception\ApiFailedException;
+use Symfony\Component\HttpClient\Exception\ClientException;
 
 class DeezerController extends AbstractController {
 
@@ -91,7 +93,7 @@ class DeezerController extends AbstractController {
             //   $form = $this->createForm(AlbumType::class, $album);
             //  $form->handleRequest($request);
             //  $data = $form->getData();
-            $data = ['title'=>$album->title, 'artist'=>$album->artist->name];
+            $data = ['title' => $album->title, 'artist' => $album->artist->name];
             return new JsonResponse($data);
         } else {
             return new JsonResponse(['error' => "error"]);
@@ -134,6 +136,7 @@ class DeezerController extends AbstractController {
     /* deezer album tracks have pages, every page has 25 tracks, this function return indexes for every page thas is necessary, 
      * for example if album has 100 tracks it has 4 pages, in this case function will return 4 indexes: 25, 50, 75 and 100
      */
+
     private function getIndexes(int $begin, int $end): array {
         $indexes = [];
         $first = $this->calculateIndex($begin);
@@ -145,7 +148,7 @@ class DeezerController extends AbstractController {
         return $indexes;
     }
 
-    public function scrobbleTracks( $trackApi, int $id, array $params, string $range): array {
+    public function scrobbleTracks($trackApi, int $id, array $params, string $range): array {
         $session = $this->requestStack->getSession();
         $this->connect($session);
         $arr = [];
@@ -158,11 +161,11 @@ class DeezerController extends AbstractController {
         if (!is_numeric($range)) {
             $arr = explode("-", $range);
             $indexes = $this->getIndexes($arr[0], $arr[1]);
-            $begin = (int) ($arr[0]-$indexes[0]);
-            $end = (int) ($arr[1]-$indexes[0]);
+            $begin = (int) ($arr[0] - $indexes[0]);
+            $end = (int) ($arr[1] - $indexes[0]);
         } else { // if range contain just single number
-            $indexes[] = $this->calculateIndex((int)$range);
-            $begin = (int) ($range-$indexes[0]);
+            $indexes[] = $this->calculateIndex((int) $range);
+            $begin = (int) ($range - $indexes[0]);
         }
 
         // we go trough all album pages and save them all in seperate  array
@@ -173,24 +176,30 @@ class DeezerController extends AbstractController {
         return $scrobbled;
     }
 
-    private function scrobbleIndexTracks( $trackApi, $tracks_arr, $params, $begin, $end) {
+    private function scrobbleIndexTracks($trackApi, $tracks_arr, $params, $begin, $end) {
         $scrobbled = [];
-       // $skipped=[];
+        // $skipped=[];
         $i = 1;
         foreach ($tracks_arr as $tracks) {
             foreach ($tracks as $track) {
                 $i++;
                 if ($end === 0 && ($i - 1) !== $begin) {
-                  //  $skipped[] = $i-1;
+                    //  $skipped[] = $i-1;
                     continue;
                 } else if ($end !== 0 && ($i - 1 < $begin || $i - 1 > $end)) {
-                   // $skipped[] = $i-1;
+                    // $skipped[] = $i-1;
                     continue;
                 }
                 $params['track'] = $track->title;
                 $params['timestamp'] = time();
-                $trackApi->scrobble($params);
-                $scrobbled[] = $params['track'];
+                try {
+                    $trackApi->scrobble($params);
+                    $scrobbled[] = $params['track'];
+                } catch (ApiFailedException $ex) {
+                    return ['error' => $ex->getMessage()];
+                } catch (ClientException $ex) {
+                    return ['error' => $ex->getMessage()];
+                } 
             }
         }
         return $scrobbled;

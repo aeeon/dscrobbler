@@ -16,4 +16,6 @@ return [
     'listenbrainz_test' => [[], ['_controller' => 'App\\Controller\\ListenbrainzController::listenbrainz_recent'], [], [['text', '/listenbrainz/test']], [], [], []],
     'listenbrainz_scrobble' => [[], ['_controller' => 'App\\Controller\\ListenbrainzController::scrobble'], [], [['text', '/listenbrainz/scrobble']], [], [], []],
     'listenbrainz_scrobbleadd' => [[], ['_controller' => 'App\\Controller\\ListenbrainzController::scrobleadd'], [], [['text', '/listenbrainz/scrobleadd']], [], [], []],
+    'settings' => [[], ['_controller' => 'App\\Controller\\SettingsController::settings'], [], [['text', '/settings']], [], [], []],
+    'settings_update' => [[], ['_controller' => 'App\\Controller\\SettingsController::settings_update'], [], [['text', '/settings/update']], [], [], []],
 ];

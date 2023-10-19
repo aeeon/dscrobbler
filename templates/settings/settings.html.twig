@@ -1,0 +1,68 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block page_contents %}
+    <h1>Settings</h1>
+
+    <div>
+                {% for label, messages in app.flashes %}
+
+            {% for message in messages %}
+
+                <div class="alert alert-{{ label }} col-md-6 offset-md-3 col-xs-12" role="alert">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endfor %}
+    </div>
+    <form action="{{  path('settings_update') }}" method="POST">
+                  <fieldset>
+        <legend>General</legend>
+        <p>
+        <label for="baseurl">Base Url</label><input type="text" name="baseurl" id="baseurl" value="{{ data.baseurl }}" />
+        </p>
+               
+                  </fieldset>
+          <fieldset>
+        <legend>Deezer</legend>
+        <p>
+        <label for="deezer_apikey">API Key</label><input type="text" name="deezer[apikey]" id="deezer_apikey" value="{{ data.deezer.apikey }}" />
+        </p>
+                  <p>
+            <label for="deezer_secret">Secret</label><input type="text" name="deezer[secret]" id="lastfm_secret" value="{{ data.deezer.secret }}" />
+        </p>
+                <p>
+            <label for="deezer_appid">AppId</label><input type="text" name="deezer[appid]" id="lastfm_appid" value="{{ data.deezer.appid }}" />
+        </p>
+          
+          </fieldset>
+           <fieldset>
+        <legend>LastFM</legend>
+        <p><label for="lastfm_username">Username</label><input type="text" name="lastfm[username]" id="lastfm_username" value="{{ data.lastfm.username }}" />
+        </p><p>
+            <label for="lastfm_subscriber">Subscriber</label><input type="text" name="lastfm[subscriber]" id="lastfm_subscriber" value="{{ data.lastfm.subscriber }}" />
+        </p>
+        <p>
+            <label for="lastfm_apikey">ApiKey</label><input type="text" name="lastfm[apiKey]" id="lastfm_apikey" value="{{ data.lastfm.apiKey }}" />
+        </p>
+          <p>
+            <label for="lastfm_apisecret">Secret</label><input type="text" name="lastfm[apiSecret]" id="lastfm_apisecret" value="{{ data.lastfm.apiSecret }}" />
+        </p>
+                <p>
+            <label for="lastfm_sessionkey">SessionKey</label><input type="text" name="lastfm[sessionKey]" id="lastfm_sessionKey" value="{{ data.lastfm.sessionKey }}" />
+        </p>
+           </fieldset>
+           <fieldset>
+        <legend>Listenbrainz</legend>
+        <p><label for="listenbrainz_username">Username</label><input type="text" name="listenbrainz[username]" id="listenbrainz_username" value="{{ data.listenbrainz.username }}" />
+        </p><p>
+            <label for="listenbrainz_token">Token</label><input type="text" name="listenbrainz[token]" id="listenbrainz_token" value="{{ data.listenbrainz.token }}" />
+        </p>
+           </fieldset>  
+        <input type="hidden" name="submitted" value="1" />
+        <p><input type="submit" value="Zapisz"/></p>
+    </form>
+{% endblock %}

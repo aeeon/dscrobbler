@@ -20,6 +20,8 @@ return [
         '/listenbrainz/test' => [[['_route' => 'listenbrainz_test', '_controller' => 'App\\Controller\\ListenbrainzController::listenbrainz_recent'], null, null, null, false, false, null]],
         '/listenbrainz/scrobble' => [[['_route' => 'listenbrainz_scrobble', '_controller' => 'App\\Controller\\ListenbrainzController::scrobble'], null, null, null, false, false, null]],
         '/listenbrainz/scrobleadd' => [[['_route' => 'listenbrainz_scrobbleadd', '_controller' => 'App\\Controller\\ListenbrainzController::scrobleadd'], null, null, null, false, false, null]],
+        '/settings' => [[['_route' => 'settings', '_controller' => 'App\\Controller\\SettingsController::settings'], null, null, null, false, false, null]],
+        '/settings/update' => [[['_route' => 'settings_update', '_controller' => 'App\\Controller\\SettingsController::settings_update'], null, ['POST' => 0], null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

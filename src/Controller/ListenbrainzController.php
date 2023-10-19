@@ -47,7 +47,11 @@ class ListenbrainzController extends AbstractController {
         $range = $data['range'];
 
         $scrobbled = $this->dz->scrobbleTracks($this->trackApi, $id, $params, $range);
-        return new JsonResponse($scrobbled);        // 
+        if(!key_exists('error', $scrobbled)) { 
+              return new JsonResponse(['data'=>$scrobbled, 'success' => 1]);
+        } else {
+              return new JsonResponse(['success' => 0, 'error'=>$scrobbled['error']]);
+        }       // 
     }
 
     #[Route('/listenbrainz/scrobleadd', name: 'listenbrainz_scrobbleadd')]
@@ -64,7 +68,7 @@ class ListenbrainzController extends AbstractController {
                 ->add('save', SubmitType::class, ['label' => 'Scrobble album'])
                 ->getForm();
 
-        return $this->render('listenbrainz/add.html.twig', ['form' => $form]);
+        return $this->render('listenbrainz/scrobble.html.twig', ['form' => $form]);
     }
 
 }

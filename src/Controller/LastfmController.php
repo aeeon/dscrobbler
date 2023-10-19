@@ -112,7 +112,7 @@ class LastfmController extends AbstractController {
                     ->getForm();
 
             //               print_r($this->trackApi);exit;
-            return $this->render('lastfm/connect.html.twig', ['form' => $form]);
+            return $this->render('lastfm/scrobble.html.twig', ['form' => $form]);
         }
     }
 
@@ -129,7 +129,13 @@ class LastfmController extends AbstractController {
         $this->trackApi = new TrackApi($this->auth);
         //echo $params['artist'] . " - " . $params['album'] . "<br>";
         $scrobbled = $this->dz->scrobbleTracks($this->trackApi, $id, $params, $range);
-        return new JsonResponse($scrobbled);
+        if(!key_exists('error', $scrobbled)) { 
+
+              return new JsonResponse(['data'=>$scrobbled, 'success' => 1]);
+        } else {
+              return new JsonResponse(['success' => 0, 'error'=>$scrobbled['error']]);
+        }
+       
     }
 
     #[Route('/lastfm/recent', name: 'lastfm_recent')]

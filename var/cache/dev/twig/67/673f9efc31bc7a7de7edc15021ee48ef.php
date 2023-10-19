@@ -197,7 +197,10 @@ class __TwigTemplate_140512e30003b866cab4addd6e9e93c8 extends Template
         echo "\">Recent scrobbles</a>
                             </div>                      
                         </li>                      
-                       
+                          <li  class=\"nav-link\"><a href=\"";
+        // line 44
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("settings");
+        echo "\">Settings</a></li>
                     </ul>
                        </div>
                 ";
@@ -228,7 +231,7 @@ class __TwigTemplate_140512e30003b866cab4addd6e9e93c8 extends Template
 
     public function getDebugInfo()
     {
-        return array (  217 => 55,  210 => 54,  196 => 41,  191 => 39,  183 => 34,  179 => 33,  175 => 32,  167 => 27,  163 => 26,  159 => 25,  153 => 22,  149 => 20,  142 => 19,  131 => 57,  129 => 54,  121 => 48,  119 => 19,  115 => 17,  108 => 16,  99 => 12,  92 => 7,  85 => 6,  72 => 5,  63 => 62,  61 => 16,  57 => 14,  55 => 6,  51 => 5,  45 => 1,);
+        return array (  220 => 55,  213 => 54,  202 => 44,  196 => 41,  191 => 39,  183 => 34,  179 => 33,  175 => 32,  167 => 27,  163 => 26,  159 => 25,  153 => 22,  149 => 20,  142 => 19,  131 => 57,  129 => 54,  121 => 48,  119 => 19,  115 => 17,  108 => 16,  99 => 12,  92 => 7,  85 => 6,  72 => 5,  63 => 62,  61 => 16,  57 => 14,  55 => 6,  51 => 5,  45 => 1,);
     }
 
     public function getSourceContext()
@@ -276,7 +279,7 @@ class __TwigTemplate_140512e30003b866cab4addd6e9e93c8 extends Template
                             <a class=\"dropdown-item\" href=\"{{ url('listenbrainz_test') }}\">Recent scrobbles</a>
                             </div>                      
                         </li>                      
-                       
+                          <li  class=\"nav-link\"><a href=\"{{ url('settings') }}\">Settings</a></li>
                     </ul>
                        </div>
                 {% endblock %}
