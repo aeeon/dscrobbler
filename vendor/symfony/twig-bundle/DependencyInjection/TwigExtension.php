@@ -11,6 +11,7 @@
 
 namespace Symfony\Bundle\TwigBundle\DependencyInjection;
 
+use Symfony\Component\AssetMapper\AssetMapper;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Resource\FileExistenceResource;
 use Symfony\Component\Console\Application;
@@ -35,6 +36,9 @@ use Twig\Loader\LoaderInterface;
  */
 class TwigExtension extends Extension
 {
+    /**
+     * @return void
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -81,6 +85,10 @@ class TwigExtension extends Extension
             if ($htmlToTextConverter = $config['mailer']['html_to_text_converter'] ?? null) {
                 $container->getDefinition('twig.mime_body_renderer')->setArgument('$converter', new Reference($htmlToTextConverter));
             }
+        }
+
+        if ($container::willBeAvailable('symfony/asset-mapper', AssetMapper::class, ['symfony/twig-bundle'])) {
+            $loader->load('importmap.php');
         }
 
         $container->setParameter('twig.form.resources', $config['form_themes']);

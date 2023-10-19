@@ -410,7 +410,7 @@ final class Dotenv
         return $value;
     }
 
-    private function skipEmptyLines()
+    private function skipEmptyLines(): void
     {
         if (preg_match('/(?:\s*+(?:#[^\n]*+)?+)++/A', $this->data, $match, 0, $this->cursor)) {
             $this->moveCursor($match[0]);
@@ -443,7 +443,7 @@ final class Dotenv
             }
 
             if (!class_exists(Process::class)) {
-                throw new \LogicException('Resolving commands requires the Symfony Process component.');
+                throw new \LogicException('Resolving commands requires the Symfony Process component. Try running "composer require symfony/process".');
             }
 
             $process = Process::fromShellCommandline('echo '.$matches[0]);
@@ -534,7 +534,7 @@ final class Dotenv
         return $value;
     }
 
-    private function moveCursor(string $text)
+    private function moveCursor(string $text): void
     {
         $this->cursor += \strlen($text);
         $this->lineno += substr_count($text, "\n");

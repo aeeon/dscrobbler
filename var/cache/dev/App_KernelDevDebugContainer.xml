@@ -126,7 +126,7 @@
       <argument type="service" id="parameter_bag"/>
       <argument type="service" id="request_stack"/>
       <call method="setContainer">
-        <argument type="service" id=".service_locator.CshazM0.App\Controller\DeezerController"/>
+        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\DeezerController"/>
       </call>
     </service>
     <service id="App\Controller\HomeController" class="App\Controller\HomeController" public="true" autowire="true" autoconfigure="true">
@@ -135,7 +135,7 @@
       <argument type="service" id="parameter_bag"/>
       <argument type="service" id="request_stack"/>
       <call method="setContainer">
-        <argument type="service" id=".service_locator.CshazM0.App\Controller\HomeController"/>
+        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\HomeController"/>
       </call>
     </service>
     <service id="App\Controller\LastfmController" class="App\Controller\LastfmController" public="true" autowire="true" autoconfigure="true">
@@ -145,26 +145,30 @@
       <argument type="service" id="parameter_bag"/>
       <argument type="service" id="request_stack"/>
       <call method="setContainer">
-        <argument type="service" id=".service_locator.CshazM0.App\Controller\LastfmController"/>
+        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\LastfmController"/>
       </call>
     </service>
     <service id="App\Controller\ListenbrainzController" class="App\Controller\ListenbrainzController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
-      <argument type="service" id="http_client"/>
+      <argument type="service" id="http_client.uri_template"/>
       <argument type="service" id="parameter_bag"/>
       <argument type="service" id="App\Controller\DeezerController"/>
       <call method="setContainer">
-        <argument type="service" id=".service_locator.CshazM0.App\Controller\ListenbrainzController"/>
+        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\ListenbrainzController"/>
       </call>
     </service>
     <service id="App\Form\Type\AlbumType" class="App\Form\Type\AlbumType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
-    <service id="App\Lib\CustomDeezerApi" class="App\Lib\CustomDeezerApi" autowire="true" autoconfigure="true"/>
-    <service id="App\Lib\LastFmAuthApi" class="App\Lib\LastFmAuthApi" autowire="true" autoconfigure="true"/>
+    <service id="App\Lib\CustomDeezerApi" class="App\Lib\CustomDeezerApi" autowire="true" autoconfigure="true">
+      <tag name="container.error" message="Cannot autowire service &quot;App\Lib\CustomDeezerApi&quot;: argument &quot;$client&quot; of method &quot;PouleR\DeezerAPI\DeezerAPI::__construct()&quot; references class &quot;PouleR\DeezerAPI\DeezerAPIClient&quot; but no such service exists."/>
+    </service>
+    <service id="App\Lib\LastFmAuthApi" class="App\Lib\LastFmAuthApi" autowire="true" autoconfigure="true">
+      <tag name="container.error" message="Cannot autowire service &quot;App\Lib\LastFmAuthApi&quot;: argument &quot;$method&quot; of method &quot;__construct()&quot; has no type-hint, you should configure its value explicitly."/>
+    </service>
     <service id="App\Lib\ListenbrainzApi" class="App\Lib\ListenbrainzApi" autowire="true" autoconfigure="true">
-      <argument type="service" id="http_client"/>
+      <argument type="service" id="http_client.uri_template"/>
       <argument type="service" id="parameter_bag"/>
     </service>
     <service id="controller_resolver" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver">
@@ -185,31 +189,40 @@
         <argument type="service" id="argument_resolver.default"/>
         <argument type="service" id="argument_resolver.variadic"/>
       </argument>
+      <argument type="service" id=".service_locator.3FMSrrH"/>
     </service>
     <service id="argument_resolver.backed_enum_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">
-      <tag name="controller.argument_value_resolver" priority="100"/>
+      <tag priority="100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">controller.argument_value_resolver</tag>
     </service>
     <service id="argument_resolver.datetime" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DateTimeValueResolver">
-      <tag name="controller.argument_value_resolver" priority="100"/>
+      <tag priority="100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DateTimeValueResolver">controller.argument_value_resolver</tag>
+      <argument>null</argument>
+    </service>
+    <service id="argument_resolver.request_payload" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestPayloadValueResolver" lazy="true">
+      <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestPayloadValueResolver">controller.targeted_value_resolver</tag>
+      <tag name="container.error" message="You can neither use &quot;#[MapRequestPayload]&quot; nor &quot;#[MapQueryString]&quot; since the Serializer component is not installed. Try running &quot;composer require symfony/serializer-pack&quot;."/>
     </service>
     <service id="argument_resolver.request_attribute" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver">
-      <tag name="controller.argument_value_resolver" priority="100"/>
+      <tag priority="100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver">controller.argument_value_resolver</tag>
     </service>
     <service id="argument_resolver.request" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver">
-      <tag name="controller.argument_value_resolver" priority="50"/>
+      <tag priority="50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver">controller.argument_value_resolver</tag>
     </service>
     <service id="argument_resolver.session" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver">
-      <tag name="controller.argument_value_resolver" priority="50"/>
+      <tag priority="50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver">controller.argument_value_resolver</tag>
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <tag name="controller.argument_value_resolver" priority="-50"/>
+      <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
       <argument type="service" id=".service_locator.HBdvAhp"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
-      <tag name="controller.argument_value_resolver" priority="-100"/>
+      <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
     </service>
     <service id="argument_resolver.variadic" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver">
-      <tag name="controller.argument_value_resolver" priority="-150"/>
+      <tag priority="-150" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver">controller.argument_value_resolver</tag>
+    </service>
+    <service id="argument_resolver.query_parameter_value_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\QueryParameterValueResolver">
+      <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\QueryParameterValueResolver">controller.targeted_value_resolver</tag>
     </service>
     <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener">
       <tag name="kernel.event_subscriber"/>
@@ -581,7 +594,7 @@
         <argument key="cache.serializer" type="service" id="cache.serializer" on-invalid="ignore_uninitialized"/>
         <argument key="cache.annotations" type="service" id="cache.annotations" on-invalid="ignore_uninitialized"/>
         <argument key="cache.property_info" type="service" id="cache.property_info" on-invalid="ignore_uninitialized"/>
-        <argument key="http_client" type="service" id="http_client" on-invalid="ignore_uninitialized"/>
+        <argument key="http_client.transport" type="service" id="http_client.transport" on-invalid="ignore_uninitialized"/>
         <argument key="session_listener" type="service" id="session_listener" on-invalid="ignore_uninitialized"/>
         <argument key="form.choice_list_factory.cached" type="service" id="form.choice_list_factory.cached" on-invalid="ignore_uninitialized"/>
         <argument key="twig.form.engine" type="service" id="twig.form.engine" on-invalid="ignore_uninitialized"/>
@@ -605,7 +618,7 @@
         <argument key="cache.property_info" type="collection">
           <argument>reset</argument>
         </argument>
-        <argument key="http_client" type="collection">
+        <argument key="http_client.transport" type="collection">
           <argument>?reset</argument>
         </argument>
         <argument key="session_listener" type="collection">
@@ -657,9 +670,8 @@
       </argument>
       <factory class="Closure" method="fromCallable"/>
     </service>
-    <service id="container.env" class="Symfony\Component\String\LazyString" abstract="true">
+    <service id="container.env" class="Symfony\Component\String\LazyString" constructor="fromCallable" abstract="true">
       <argument type="service" id="container.getenv"/>
-      <factory class="Symfony\Component\String\LazyString" method="fromCallable"/>
     </service>
     <service id="config_builder.warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\ConfigBuilderCacheWarmer">
       <tag name="kernel.cache_warmer"/>
@@ -1295,7 +1307,7 @@
     <service id="assets.empty_version_strategy" class="Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy"/>
     <service id="assets.json_manifest_version_strategy" class="Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy" abstract="true">
       <argument type="abstract">manifest path</argument>
-      <argument type="service" id="http_client" on-invalid="null"/>
+      <argument type="service" id="http_client.uri_template" on-invalid="null"/>
       <argument>false</argument>
     </service>
     <service id="assets._default_package" class="Symfony\Component\Asset\PathPackage">
@@ -1303,14 +1315,14 @@
       <argument type="service" id="assets.empty_version_strategy"/>
       <argument type="service" id="assets.context"/>
     </service>
-    <service id="http_client" class="Symfony\Contracts\HttpClient\HttpClientInterface">
+    <service id="http_client.transport" class="Symfony\Contracts\HttpClient\HttpClientInterface">
       <tag name="monolog.logger" channel="http_client"/>
       <tag name="kernel.reset" method="reset" on_invalid="ignore"/>
-      <tag name="http_client.client"/>
       <argument type="collection">
         <argument key="max_redirects">7</argument>
         <argument key="headers" type="collection"/>
         <argument key="resolve" type="collection"/>
+        <argument key="extra" type="collection"/>
       </argument>
       <argument>6</argument>
       <call method="setLogger">
@@ -1325,17 +1337,41 @@
       <argument type="abstract">max delay ms</argument>
       <argument type="abstract">jitter</argument>
     </service>
-    <service id="debug.debug_handlers_listener" class="Symfony\Component\HttpKernel\EventListener\DebugHandlersListener">
-      <tag name="kernel.event_subscriber"/>
-      <tag name="monolog.logger" channel="php"/>
-      <tag name="container.hot_path"/>
+    <service id="http_client.uri_template" class="Symfony\Component\HttpClient\UriTemplateHttpClient">
+      <tag name="http_client.client"/>
+      <tag name="container.decorator" id="http_client" inner="http_client.uri_template.inner"/>
+      <argument type="service" id="http_client.uri_template.inner"/>
       <argument>null</argument>
+      <argument type="collection"/>
+    </service>
+    <service id="http_client.uri_template_expander.guzzle" class="Closure">
+      <argument type="collection">
+        <argument>GuzzleHttp\UriTemplate\UriTemplate</argument>
+        <argument>expand</argument>
+      </argument>
+      <factory class="Closure" method="fromCallable"/>
+    </service>
+    <service id="http_client.uri_template_expander.rize" class="Closure">
+      <argument type="collection">
+        <argument type="service">
+          <service class="Rize\UriTemplate"/>
+        </argument>
+        <argument>expand</argument>
+      </argument>
+      <factory class="Closure" method="fromCallable"/>
+    </service>
+    <service id="debug.error_handler_configurator" class="Symfony\Component\HttpKernel\Debug\ErrorHandlerConfigurator" public="true">
+      <tag name="monolog.logger" channel="php"/>
       <argument>null</argument>
       <argument>null</argument>
       <argument>-1</argument>
       <argument>true</argument>
       <argument>true</argument>
       <argument>null</argument>
+    </service>
+    <service id="debug.debug_handlers_listener" class="Symfony\Component\HttpKernel\EventListener\DebugHandlersListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
     </service>
     <service id="debug.file_link_formatter" class="Symfony\Component\HttpKernel\Debug\FileLinkFormatter">
       <argument>%env(default::SYMFONY_IDE)%</argument>
@@ -1451,13 +1487,12 @@
         <argument type="service" id="config_cache_factory"/>
       </call>
     </service>
-    <service id="router.request_context" class="Symfony\Component\Routing\RequestContext">
+    <service id="router.request_context" class="Symfony\Component\Routing\RequestContext" constructor="fromUri">
       <argument></argument>
       <argument>localhost</argument>
       <argument>http</argument>
       <argument>80</argument>
       <argument>443</argument>
-      <factory class="Symfony\Component\Routing\RequestContext" method="fromUri"/>
     </service>
     <service id="router.cache_warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer">
       <tag name="container.service_subscriber" id="router"/>
@@ -1495,7 +1530,6 @@
     <service id="annotations.reader" class="Doctrine\Common\Annotations\AnnotationReader">
       <call method="addGlobalIgnoredName">
         <argument>required</argument>
-        <argument>null</argument>
       </call>
     </service>
     <service id="annotations.cached_reader" class="Doctrine\Common\Annotations\PsrCachedReader">
@@ -1520,11 +1554,10 @@
       <argument>#^Symfony\\(?:Component\\HttpKernel\\|Bundle\\FrameworkBundle\\Controller\\(?!.*Controller$))#</argument>
       <argument>true</argument>
     </service>
-    <service id="annotations.cache_adapter" class="Symfony\Component\Cache\Adapter\PhpArrayAdapter">
+    <service id="annotations.cache_adapter" class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" constructor="create">
       <tag name="container.hot_path"/>
       <argument>/home/fb/Backup/Dokumenty/public_html/dscrobbler/var/cache/dev/annotations.php</argument>
       <argument type="service" id="cache.annotations"/>
-      <factory class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" method="create"/>
     </service>
     <service id="property_accessor" class="Symfony\Component\PropertyAccess\PropertyAccessor">
       <argument>3</argument>
@@ -1538,10 +1571,9 @@
       <argument>/home/fb/Backup/Dokumenty/public_html/dscrobbler/config/secrets/%env(default:kernel.environment:APP_RUNTIME_ENV)%</argument>
       <argument type="service" id="secrets.decryption_key" on-invalid="ignore"/>
     </service>
-    <service id="secrets.decryption_key" class="Symfony\Component\String\LazyString">
+    <service id="secrets.decryption_key" class="Symfony\Component\String\LazyString" constructor="fromCallable">
       <argument type="service" id="container.getenv"/>
       <argument>base64:default::SYMFONY_DECRYPTION_SECRET</argument>
-      <factory class="Symfony\Component\String\LazyString" method="fromCallable"/>
     </service>
     <service id="secrets.local_vault" class="Symfony\Bundle\FrameworkBundle\Secrets\DotenvVault">
       <argument>/home/fb/Backup/Dokumenty/public_html/dscrobbler/.env.dev.local</argument>
@@ -1567,19 +1599,17 @@
       <tag name="property_info.access_extractor" priority="-1000"/>
       <tag name="property_info.initializable_extractor" priority="-1000"/>
     </service>
-    <service id=".cache_connection.GD_MSZC" class="Symfony\Component\Cache\Adapter\AbstractAdapter">
+    <service id=".cache_connection.GD_MSZC" class="Symfony\Component\Cache\Adapter\AbstractAdapter" constructor="createConnection">
       <argument>redis://localhost</argument>
       <argument type="collection">
         <argument key="lazy">true</argument>
       </argument>
-      <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createConnection"/>
     </service>
-    <service id=".cache_connection.JKE6keX" class="Symfony\Component\Cache\Adapter\AbstractAdapter">
+    <service id=".cache_connection.JKE6keX" class="Symfony\Component\Cache\Adapter\AbstractAdapter" constructor="createConnection">
       <argument>memcached://localhost</argument>
       <argument type="collection">
         <argument key="lazy">true</argument>
       </argument>
-      <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createConnection"/>
     </service>
     <service id="cache.property_access" class="Symfony\Component\Cache\Adapter\ArrayAdapter">
       <argument>0</argument>
@@ -2099,7 +2129,7 @@
       <argument>null</argument>
       <argument type="service" id="request_stack"/>
     </service>
-    <service id=".service_locator.CshazM0" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.O2p6Lk7" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="form.factory" type="service_closure" id="form.factory" on-invalid="ignore"/>
@@ -2110,29 +2140,29 @@
         <argument key="twig" type="service_closure" id="twig" on-invalid="ignore"/>
       </argument>
     </service>
-    <service id=".service_locator.CshazM0.App\Controller\DeezerController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.O2p6Lk7.App\Controller\DeezerController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\DeezerController"/>
       <argument>App\Controller\DeezerController</argument>
       <argument type="service" id="service_container"/>
-      <factory service=".service_locator.CshazM0" method="withContext"/>
+      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
     </service>
-    <service id=".service_locator.CshazM0.App\Controller\HomeController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.O2p6Lk7.App\Controller\HomeController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\HomeController"/>
       <argument>App\Controller\HomeController</argument>
       <argument type="service" id="service_container"/>
-      <factory service=".service_locator.CshazM0" method="withContext"/>
+      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
     </service>
-    <service id=".service_locator.CshazM0.App\Controller\LastfmController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.O2p6Lk7.App\Controller\LastfmController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\LastfmController"/>
       <argument>App\Controller\LastfmController</argument>
       <argument type="service" id="service_container"/>
-      <factory service=".service_locator.CshazM0" method="withContext"/>
+      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
     </service>
-    <service id=".service_locator.CshazM0.App\Controller\ListenbrainzController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.O2p6Lk7.App\Controller\ListenbrainzController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\ListenbrainzController"/>
       <argument>App\Controller\ListenbrainzController</argument>
       <argument type="service" id="service_container"/>
-      <factory service=".service_locator.CshazM0" method="withContext"/>
+      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
     </service>
     <service id=".service_locator.PvoQzFT" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
@@ -2182,6 +2212,21 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.etVElvN" method="withContext"/>
     </service>
+    <service id=".service_locator.3FMSrrH" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver" type="service_closure" id="argument_resolver.backed_enum_resolver"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DateTimeValueResolver" type="service_closure" id="argument_resolver.datetime"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" type="service_closure" id="argument_resolver.default"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\QueryParameterValueResolver" type="service_closure" id="argument_resolver.query_parameter_value_resolver"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver" type="service_closure" id="argument_resolver.request_attribute"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestPayloadValueResolver" type="service_closure" id="argument_resolver.request_payload"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver" type="service_closure" id="argument_resolver.request"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" type="service_closure" id="argument_resolver.service"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver" type="service_closure" id="argument_resolver.session"/>
+        <argument key="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" type="service_closure" id="argument_resolver.variadic"/>
+      </argument>
+    </service>
     <service id=".service_locator.XXv1IfR" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -2217,7 +2262,15 @@
         <argument key="session_factory" type="service_closure" id="session.factory" on-invalid="ignore"/>
       </argument>
     </service>
-    <service id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
+    <service id="http_client.uri_template.inner" class="Symfony\Contracts\HttpClient\HttpClientInterface">
+      <argument type="collection">
+        <argument type="service" id="http_client.transport"/>
+      </argument>
+      <factory function="current"/>
+    </service>
+    <service id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface">
+      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.y4_Zrx.&quot;: it needs an instance of &quot;Symfony\Component\Config\Loader\LoaderInterface&quot; but this type has been excluded from autowiring."/>
+    </service>
     <service id=".console.command.about.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>about</argument>
       <argument type="collection"/>
@@ -2513,7 +2566,7 @@
     <service id="Symfony\Contracts\Cache\CacheInterface" alias="cache.app"/>
     <service id="Symfony\Contracts\Cache\TagAwareCacheInterface" alias="cache.app.taggable"/>
     <service id="Symfony\Component\Asset\Packages" alias="assets.packages"/>
-    <service id="Symfony\Contracts\HttpClient\HttpClientInterface" alias="http_client"/>
+    <service id="Symfony\Contracts\HttpClient\HttpClientInterface" alias="http_client.uri_template"/>
     <service id="Symfony\Component\HttpKernel\Debug\FileLinkFormatter" alias="debug.file_link_formatter"/>
     <service id="router" alias="router.default" public="true"/>
     <service id="Symfony\Component\Routing\RouterInterface" alias="router.default"/>
@@ -2543,7 +2596,9 @@
     <service id="Symfony\Component\Form\FormFactoryInterface" alias="form.factory"/>
     <service id="form.property_accessor" alias="property_accessor"/>
     <service id="form.choice_list_factory" alias="form.choice_list_factory.cached"/>
-    <service id="Twig_Environment" alias="twig"/>
+    <service id="Twig_Environment" alias="twig">
+      <deprecated package="symfony/twig-bundle" version="6.3">The "%alias_id%" service alias is deprecated, use "Twig\Environment" or "twig" instead.</deprecated>
+    </service>
     <service id="Twig\Environment" alias="twig"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.7nzbL4K" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
@@ -2553,10 +2608,12 @@
     <service id=".service_locator.o.uf2zi" alias=".service_locator.7nzbL4K"/>
     <service id=".service_locator.L.EDYUC" alias=".service_locator.HBdvAhp"/>
     <service id=".service_locator.b7eifrF" alias=".service_locator.VHeUsyi"/>
-    <service id=".service_locator.VZoQk0z" alias=".service_locator.CshazM0"/>
+    <service id=".service_locator.jUv.zyj" alias=".service_locator.O2p6Lk7"/>
+    <service id="http_client" alias="http_client.uri_template"/>
     <service id="twig.error_renderer.html.inner" alias="error_handler.error_renderer.html"/>
     <service id=".service_locator.gFlme_s" alias=".service_locator.y4_Zrx."/>
-    <service id=".service_locator.BcoExym" alias=".service_locator.CshazM0"/>
+    <service id=".service_locator.HxfGI0d" alias=".service_locator.O2p6Lk7"/>
+    <service id=".service_locator.F6D.70D" alias=".service_locator.3FMSrrH"/>
     <service id=".service_locator.u6DWx23" alias=".service_locator.cXsfP3P"/>
   </services>
 </container>

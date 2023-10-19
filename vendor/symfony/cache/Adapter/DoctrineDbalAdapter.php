@@ -68,7 +68,7 @@ class DoctrineDbalAdapter extends AbstractAdapter implements PruneableInterface
             $this->conn = $connOrDsn;
         } else {
             if (!class_exists(DriverManager::class)) {
-                throw new InvalidArgumentException(sprintf('Failed to parse the DSN "%s". Try running "composer require doctrine/dbal".', $connOrDsn));
+                throw new InvalidArgumentException('Failed to parse DSN. Try running "composer require doctrine/dbal".');
             }
             if (class_exists(DsnParser::class)) {
                 $params = (new DsnParser([
@@ -123,14 +123,18 @@ class DoctrineDbalAdapter extends AbstractAdapter implements PruneableInterface
         }
     }
 
-    public function configureSchema(Schema $schema, Connection $forConnection): void
+    /**
+     * @param \Closure $isSameDatabase
+     */
+    public function configureSchema(Schema $schema, Connection $forConnection/* , \Closure $isSameDatabase */): void
     {
-        // only update the schema for this connection
-        if ($forConnection !== $this->conn) {
+        if ($schema->hasTable($this->table)) {
             return;
         }
 
-        if ($schema->hasTable($this->table)) {
+        $isSameDatabase = 2 < \func_num_args() ? func_get_arg(2) : static fn () => false;
+
+        if ($forConnection !== $this->conn && !$isSameDatabase($this->conn->executeStatement(...))) {
             return;
         }
 
@@ -344,7 +348,7 @@ class DoctrineDbalAdapter extends AbstractAdapter implements PruneableInterface
     /**
      * @internal
      */
-    protected function getId($key)
+    protected function getId(mixed $key): string
     {
         if ('pgsql' !== $this->platformName ??= $this->getPlatformName()) {
             return parent::getId($key);
@@ -365,16 +369,16 @@ class DoctrineDbalAdapter extends AbstractAdapter implements PruneableInterface
 
         $platform = $this->conn->getDatabasePlatform();
 
-        return match (true) {
+        return $this->platformName = match (true) {
             $platform instanceof \Doctrine\DBAL\Platforms\MySQLPlatform,
-            $platform instanceof \Doctrine\DBAL\Platforms\MySQL57Platform => $this->platformName = 'mysql',
-            $platform instanceof \Doctrine\DBAL\Platforms\SqlitePlatform => $this->platformName = 'sqlite',
+            $platform instanceof \Doctrine\DBAL\Platforms\MySQL57Platform => 'mysql',
+            $platform instanceof \Doctrine\DBAL\Platforms\SqlitePlatform => 'sqlite',
             $platform instanceof \Doctrine\DBAL\Platforms\PostgreSQLPlatform,
-            $platform instanceof \Doctrine\DBAL\Platforms\PostgreSQL94Platform => $this->platformName = 'pgsql',
-            $platform instanceof \Doctrine\DBAL\Platforms\OraclePlatform => $this->platformName = 'oci',
+            $platform instanceof \Doctrine\DBAL\Platforms\PostgreSQL94Platform => 'pgsql',
+            $platform instanceof \Doctrine\DBAL\Platforms\OraclePlatform => 'oci',
             $platform instanceof \Doctrine\DBAL\Platforms\SQLServerPlatform,
-            $platform instanceof \Doctrine\DBAL\Platforms\SQLServer2012Platform => $this->platformName = 'sqlsrv',
-            default => $this->platformName = $platform::class,
+            $platform instanceof \Doctrine\DBAL\Platforms\SQLServer2012Platform => 'sqlsrv',
+            default => $platform::class,
         };
     }
 

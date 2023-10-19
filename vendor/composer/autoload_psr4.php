@@ -10,6 +10,7 @@ return array(
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
     'Tests\\' => array($vendorDir . '/matto1990/lastfm-api/tests'),
     'Symfony\\Runtime\\Symfony\\Component\\' => array($vendorDir . '/symfony/runtime/Internal'),
+    'Symfony\\Polyfill\\Php83\\' => array($vendorDir . '/symfony/polyfill-php83'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Polyfill\\Intl\\Normalizer\\' => array($vendorDir . '/symfony/polyfill-intl-normalizer'),
     'Symfony\\Polyfill\\Intl\\Icu\\' => array($vendorDir . '/symfony/polyfill-intl-icu'),

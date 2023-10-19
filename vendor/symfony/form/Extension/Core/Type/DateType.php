@@ -43,6 +43,9 @@ class DateType extends AbstractType
         'choice' => ChoiceType::class,
     ];
 
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $dateFormat = \is_int($options['format']) ? $options['format'] : self::DEFAULT_FORMAT;
@@ -81,12 +84,10 @@ class DateType extends AbstractType
             $emptyData = $builder->getEmptyData() ?: [];
 
             if ($emptyData instanceof \Closure) {
-                $lazyEmptyData = static function ($option) use ($emptyData) {
-                    return static function (FormInterface $form) use ($emptyData, $option) {
-                        $emptyData = $emptyData($form->getParent());
+                $lazyEmptyData = static fn ($option) => static function (FormInterface $form) use ($emptyData, $option) {
+                    $emptyData = $emptyData($form->getParent());
 
-                        return $emptyData[$option] ?? '';
-                    };
+                    return $emptyData[$option] ?? '';
                 };
 
                 $yearOptions['empty_data'] = $lazyEmptyData('year');
@@ -179,6 +180,9 @@ class DateType extends AbstractType
         }
     }
 
+    /**
+     * @return void
+     */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['widget'] = $options['widget'];
@@ -216,17 +220,16 @@ class DateType extends AbstractType
         }
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $compound = function (Options $options) {
-            return 'single_text' !== $options['widget'];
-        };
+        $compound = static fn (Options $options) => 'single_text' !== $options['widget'];
 
-        $placeholderDefault = function (Options $options) {
-            return $options['required'] ? null : '';
-        };
+        $placeholderDefault = static fn (Options $options) => $options['required'] ? null : '';
 
-        $placeholderNormalizer = function (Options $options, $placeholder) use ($placeholderDefault) {
+        $placeholderNormalizer = static function (Options $options, $placeholder) use ($placeholderDefault) {
             if (\is_array($placeholder)) {
                 $default = $placeholderDefault($options);
 
@@ -243,7 +246,7 @@ class DateType extends AbstractType
             ];
         };
 
-        $choiceTranslationDomainNormalizer = function (Options $options, $choiceTranslationDomain) {
+        $choiceTranslationDomainNormalizer = static function (Options $options, $choiceTranslationDomain) {
             if (\is_array($choiceTranslationDomain)) {
                 $default = false;
 
@@ -260,15 +263,17 @@ class DateType extends AbstractType
             ];
         };
 
-        $format = function (Options $options) {
-            return 'single_text' === $options['widget'] ? self::HTML5_FORMAT : self::DEFAULT_FORMAT;
-        };
+        $format = static fn (Options $options) => 'single_text' === $options['widget'] ? self::HTML5_FORMAT : self::DEFAULT_FORMAT;
 
         $resolver->setDefaults([
             'years' => range((int) date('Y') - 5, (int) date('Y') + 5),
             'months' => range(1, 12),
             'days' => range(1, 31),
-            'widget' => 'choice',
+            'widget' => static function (Options $options) {
+                trigger_deprecation('symfony/form', '6.3', 'Not configuring the "widget" option of form type "date" is deprecated. It will default to "single_text" in Symfony 7.0.');
+
+                return 'choice';
+            },
             'input' => 'datetime',
             'format' => $format,
             'model_timezone' => null,
@@ -285,9 +290,7 @@ class DateType extends AbstractType
             // this option.
             'data_class' => null,
             'compound' => $compound,
-            'empty_data' => function (Options $options) {
-                return $options['compound'] ? [] : '';
-            },
+            'empty_data' => static fn (Options $options) => $options['compound'] ? [] : '',
             'choice_translation_domain' => false,
             'input_format' => 'Y-m-d',
             'invalid_message' => 'Please enter a valid date.',
@@ -315,7 +318,7 @@ class DateType extends AbstractType
         $resolver->setAllowedTypes('days', 'array');
         $resolver->setAllowedTypes('input_format', 'string');
 
-        $resolver->setNormalizer('html5', function (Options $options, $html5) {
+        $resolver->setNormalizer('html5', static function (Options $options, $html5) {
             if ($html5 && 'single_text' === $options['widget'] && self::HTML5_FORMAT !== $options['format']) {
                 throw new LogicException(sprintf('Cannot use the "format" option of "%s" when the "html5" option is enabled.', self::class));
             }
@@ -329,7 +332,7 @@ class DateType extends AbstractType
         return 'date';
     }
 
-    private function formatTimestamps(\IntlDateFormatter $formatter, string $regex, array $timestamps)
+    private function formatTimestamps(\IntlDateFormatter $formatter, string $regex, array $timestamps): array
     {
         $pattern = $formatter->getPattern();
         $timezone = $formatter->getTimeZoneId();
@@ -354,7 +357,7 @@ class DateType extends AbstractType
         return $formattedTimestamps;
     }
 
-    private function listYears(array $years)
+    private function listYears(array $years): array
     {
         $result = [];
 
@@ -365,7 +368,7 @@ class DateType extends AbstractType
         return $result;
     }
 
-    private function listMonths(array $months)
+    private function listMonths(array $months): array
     {
         $result = [];
 
@@ -376,7 +379,7 @@ class DateType extends AbstractType
         return $result;
     }
 
-    private function listDays(array $days)
+    private function listDays(array $days): array
     {
         $result = [];
 
