@@ -10,8 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\CurlHttpClient;
 use PouleR\DeezerAPI\DeezerAPIClient;
-use PouleR\DeezerAPI\DeezerAPI;
-//use LastFmApi\Api\TrackApi;
+use App\Lib\CustomDeezerApi as DeezerAPI;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class DeezerController extends AbstractController {

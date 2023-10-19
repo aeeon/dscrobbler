@@ -87,7 +87,6 @@ class BaseApi
     public function __construct($auth, $config = array())
     {
         $this->config = $config;
-
         if (empty($this->config)) {
             $this->config = array(
                 'enabled' => false

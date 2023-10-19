@@ -12,10 +12,10 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
-use LastFmApi\Api\AuthApi;
+use Symfony\Component\Yaml\Yaml;
 use LastFmApi\Api\TrackApi;
 use LastFmApi\Api\UserApi;
-use Symfony\Component\Yaml\Yaml;
+use App\Lib\LastFmAuthApi as AuthApi;
 use App\Entity\Album;
 
 class LastfmController extends AbstractController {
@@ -48,6 +48,7 @@ class LastfmController extends AbstractController {
 
     private function getToken($session, array $params): Response {
         $session->set('state', md5(uniqid(rand(), TRUE))); //CSRF protection
+        
         $obj = new AuthApi('gettoken', $params);
          $url = $this->callback . '?token=' . $obj->token;
         $dialog_url = self::AUTH_URL . '?api_key=' . $params['apiKey'] . '&token=' . $obj->token . "&cb=" . urlencode($url);

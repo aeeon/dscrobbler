@@ -64,7 +64,6 @@ class AuthApi extends BaseApi
      */
     public function __construct($method, $vars)
     {
-        parent::__construct((object)$vars);
         if ($method == 'getsession') {
             if (!empty($vars['apiKey']) && !empty($vars['apiSecret']) && !empty($vars['token'])) {
                 $this->apiKey = $vars['apiKey'];
@@ -137,6 +136,7 @@ class AuthApi extends BaseApi
 
         $sig = $this->apiSig($this->apiSecret, $vars);
         $vars['api_sig'] = $sig;
+
         if ($call = $this->apiGetCall($vars)) {
             $this->token = $call->token;
         } else {

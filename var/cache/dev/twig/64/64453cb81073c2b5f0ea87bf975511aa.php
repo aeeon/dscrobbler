@@ -74,7 +74,7 @@ class __TwigTemplate_24faf610f3811e3eea8e4dacff81658f extends Template
 
   ";
         // line 8
-        echo twig_escape_filter($this->env, twig_var_dump($this->env, $context, ...[(isset($context["data"]) || array_key_exists("data", $context) ? $context["data"] : (function () { throw new RuntimeError('Variable "data" does not exist.', 8, $this->source); })())]), "html", null, true);
+        echo twig_var_dump($this->env, $context, ...[(isset($context["data"]) || array_key_exists("data", $context) ? $context["data"] : (function () { throw new RuntimeError('Variable "data" does not exist.', 8, $this->source); })())]);
         echo "
 ";
         

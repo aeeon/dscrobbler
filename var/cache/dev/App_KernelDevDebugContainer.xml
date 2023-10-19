@@ -45,10 +45,10 @@
       <parameter key="subscriber" type="string">0</parameter>
       <parameter key="apiKey">60d016e2508779089b4bd053b9645715</parameter>
       <parameter key="apiSecret">15d9771f3542a5301ad9b27af3a68994</parameter>
-      <parameter key="sessionKey">AVmr3sic-jdttk3OS5awwvoxs0n1_Ic8</parameter>
+      <parameter key="sessionKey">mlU25LTNdC3pA6p5VEyhrgksCWR5uUMZ</parameter>
     </parameter>
     <parameter key="listenbrainz" type="collection">
-      <parameter key="token">bf4d8e70-3c86-40d3-a342-00b5df6d1fca</parameter>
+      <parameter key="token">11614abe-3472-48c8-8e2a-88724b8f342a</parameter>
       <parameter key="username">aeeon</parameter>
     </parameter>
     <parameter key="event_dispatcher.event_aliases" type="collection">
@@ -161,6 +161,8 @@
     <service id="App\Form\Type\AlbumType" class="App\Form\Type\AlbumType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
+    <service id="App\Lib\CustomDeezerApi" class="App\Lib\CustomDeezerApi" autowire="true" autoconfigure="true"/>
+    <service id="App\Lib\LastFmAuthApi" class="App\Lib\LastFmAuthApi" autowire="true" autoconfigure="true"/>
     <service id="App\Lib\ListenbrainzApi" class="App\Lib\ListenbrainzApi" autowire="true" autoconfigure="true">
       <argument type="service" id="http_client"/>
       <argument type="service" id="parameter_bag"/>
