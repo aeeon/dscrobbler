@@ -14,6 +14,7 @@ use App\Lib\CustomDeezerApi as DeezerAPI;
 use Symfony\Component\HttpFoundation\RequestStack;
 use LastFmApi\Exception\ApiFailedException;
 use Symfony\Component\HttpClient\Exception\ClientException;
+use LastFmApi\Exception\NotAuthenticatedException;
 
 class DeezerController extends AbstractController {
 
@@ -196,6 +197,8 @@ class DeezerController extends AbstractController {
                     $trackApi->scrobble($params);
                     $scrobbled[] = $params['track'];
                 } catch (ApiFailedException $ex) {
+                    return ['error' => $ex->getMessage()];
+                } catch(NotAuthenticatedException $ex) {
                     return ['error' => $ex->getMessage()];
                 } catch (ClientException $ex) {
                     return ['error' => $ex->getMessage()];

@@ -45,7 +45,7 @@
       <parameter key="subscriber" type="string">0</parameter>
       <parameter key="apiKey">60d016e2508779089b4bd053b9645715</parameter>
       <parameter key="apiSecret">15d9771f3542a5301ad9b27af3a68994</parameter>
-      <parameter key="sessionKey">qQZerrfV5Y8ubaVIjOP6m4rQvUTIwcI2</parameter>
+      <parameter key="sessionKey">xhUrbhk4ktueG-gcjg2B3Ptw7pG9Cun_</parameter>
     </parameter>
     <parameter key="listenbrainz" type="collection">
       <parameter key="username">aeeon</parameter>
