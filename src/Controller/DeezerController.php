@@ -157,9 +157,20 @@ class DeezerController extends AbstractController {
         $end = 0;
         $indexes = [];
         $tracks_arr = [];
-
-        // if $range contain actual numbers range
-        if (!is_numeric($range)) {
+        $pos = array();
+        // $regex1="/^[0-9,]+$/";
+        $regex1 = "/^(|((\d+)(,\d+)+))$/";
+        $regex2 = "/^((\d+-(\*|\d+))|((\*|\d+)-\d+))$/";
+        if (preg_match($regex1, $range)) { // numbers separated by commas
+            $arr = explode(",", $range);
+            sort($arr, SORT_NUMERIC);
+            $j = 0;
+            $indexes = $this->getIndexes($arr[0], $arr[count($arr) - 1]);
+            foreach ($arr as $el) {
+                $pos[] = (int) ($el - $indexes[0]);
+                $j++;
+            }
+        } else if (preg_match($regex2, $range)) { // if $range contain actual numbers range
             $arr = explode("-", $range);
             $indexes = $this->getIndexes($arr[0], $arr[1]);
             $begin = (int) ($arr[0] - $indexes[0]);
@@ -170,40 +181,53 @@ class DeezerController extends AbstractController {
         }
 
         // we go trough all album pages and save them all in seperate  array
+
         foreach ($indexes as $index) {
+
             $tracks_arr[] = $this->api->getAlbumTracks($id, $index)->data;
         }
-        $scrobbled = $this->scrobbleIndexTracks($trackApi, $tracks_arr, $params, $begin, $end);
+        $scrobbled = $this->scrobbleIndexTracks($trackApi, $tracks_arr, $params, $begin, $end, $pos);
         return $scrobbled;
     }
 
-    private function scrobbleIndexTracks($trackApi, $tracks_arr, $params, $begin, $end) {
+    private function scrobbleIndexTracks($trackApi, $tracks_arr, $params, $begin, $end, $pos = array()) : array {
         $scrobbled = [];
-        // $skipped=[];
         $i = 1;
+        $multiple = false;
+        if ($end === 0 && $begin === 0 && !empty($pos)) {
+            $multiple = true;
+        }
         foreach ($tracks_arr as $tracks) {
             foreach ($tracks as $track) {
                 $i++;
-                if ($end === 0 && ($i - 1) !== $begin) {
-                    //  $skipped[] = $i-1;
-                    continue;
-                } else if ($end !== 0 && ($i - 1 < $begin || $i - 1 > $end)) {
-                    // $skipped[] = $i-1;
-                    continue;
+                if ($multiple) {
+                    if (!in_array($i - 1, $pos)) continue;
+                } else {
+                    if ($end === 0 && ($i - 1) !== $begin) 
+                        continue;
+                    else if ($end !== 0 && ($i - 1 < $begin || $i - 1 > $end))
+                        continue;   
                 }
-                $params['track'] = $track->title;
-                $params['timestamp'] = time();
-                try {
-                    $trackApi->scrobble($params);
-                    $scrobbled[] = $params['track'];
-                } catch (ApiFailedException $ex) {
-                    return ['error' => $ex->getMessage()];
-                } catch(NotAuthenticatedException $ex) {
-                    return ['error' => $ex->getMessage()];
-                } catch (ClientException $ex) {
-                    return ['error' => $ex->getMessage()];
-                } 
+                $scrobbled[] = $this->scrobble($track, $trackApi, $params);
             }
+        }
+        return $scrobbled;
+    }
+
+    private function scrobble($track, $trackApi, $params):array {
+        $scrobbled = [];
+        //$skipped=[];
+        $params['track'] = $track->title;
+        $params['timestamp'] = time();
+        try {
+            $trackApi->scrobble($params);
+            $scrobbled[] = $params['track'];
+        } catch (ApiFailedException $ex) {
+            return ['error' => $ex->getMessage()];
+        } catch (NotAuthenticatedException $ex) {
+            return ['error' => $ex->getMessage()];
+        } catch (ClientException $ex) {
+            return ['error' => $ex->getMessage()];
         }
         return $scrobbled;
     }

@@ -45,11 +45,11 @@
       <parameter key="subscriber" type="string">0</parameter>
       <parameter key="apiKey">60d016e2508779089b4bd053b9645715</parameter>
       <parameter key="apiSecret">15d9771f3542a5301ad9b27af3a68994</parameter>
-      <parameter key="sessionKey">xhUrbhk4ktueG-gcjg2B3Ptw7pG9Cun_</parameter>
+      <parameter key="sessionKey">eu2V5e_0zS2DHSh3pX8rBDy8hQeTMPsD</parameter>
     </parameter>
     <parameter key="listenbrainz" type="collection">
       <parameter key="username">aeeon</parameter>
-      <parameter key="token">ed0dcbf0-4a12-4f74-9ec0-80fe8c8c6db7</parameter>
+      <parameter key="token">4d549e5a-fd4a-4f42-812d-63d48a6c55bf</parameter>
     </parameter>
     <parameter key="event_dispatcher.event_aliases" type="collection">
       <parameter key="Symfony\Component\Console\Event\ConsoleCommandEvent">console.command</parameter>
@@ -177,8 +177,7 @@
       <tag name="container.error" message="Cannot autowire service &quot;App\Lib\LastFmAuthApi&quot;: argument &quot;$method&quot; of method &quot;__construct()&quot; has no type-hint, you should configure its value explicitly."/>
     </service>
     <service id="App\Lib\ListenbrainzApi" class="App\Lib\ListenbrainzApi" autowire="true" autoconfigure="true">
-      <argument type="service" id="http_client.uri_template"/>
-      <argument type="service" id="parameter_bag"/>
+      <tag name="container.error" message="Cannot autowire service &quot;App\Lib\ListenbrainzApi&quot;: argument &quot;$settings&quot; of method &quot;__construct()&quot; is type-hinted &quot;array&quot;, you should configure its value explicitly."/>
     </service>
     <service id="controller_resolver" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver">
       <tag name="monolog.logger" channel="request"/>

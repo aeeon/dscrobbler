@@ -3,7 +3,6 @@
 namespace App\Lib;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 /**
  * Description of ListenbrainzApi
  *
@@ -16,8 +15,8 @@ class ListenbrainzApi {
     private array $settings;
     private HttpClientInterface $client;
         
-    public function __construct( HttpClientInterface $client, ParameterBagInterface $settings) {
-        $this->settings = $settings->get("listenbrainz");
+    public function __construct( HttpClientInterface $client, array $settings) {
+        $this->settings = $settings;
         $this->client = $client;
         $this->auth_header = array("Authorization" => "Token " . $this->settings['token']);       
     }

@@ -28,7 +28,8 @@ class ListenbrainzController extends AbstractController {
             private HttpClientInterface $client, ParameterBagInterface $settings, DeezerController $dz
     ) {
         $this->dz = $dz;
-        $this->trackApi = new ListenbrainzApi($client, $settings);
+        $lb_settings = $settings->get("listenbrainz");
+        $this->trackApi = new ListenbrainzApi($client, $lb_settings);
     }
 
     #[Route('/listenbrainz/test', name: 'listenbrainz_test')]
